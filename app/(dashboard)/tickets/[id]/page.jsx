@@ -10,6 +10,12 @@ export async function generateStaticParams() {
     }))
   }
   
+  export async function generateMetadata({params}){
+    const {id} = params
+    return {
+      title : `U Help | ${id}`
+    }
+  }
 
 async function getTickets(id){
     const res = await fetch("http://localhost:4000/tickets/"+id, {
