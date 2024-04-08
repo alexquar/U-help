@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from './ticket-bg.png'
-export default function Navbar() {
+import { Space_Mono } from 'next/font/google'
+export default function Navbar({user}) {
   return (
     <nav>
         <Image
@@ -14,6 +15,7 @@ export default function Navbar() {
       <h1>U Help</h1>
       <Link href='/'> Home</Link>
       <Link href='/tickets'> Tickets</Link>
+      {user && (<span>Hey, {user.email}</span>) }
     </nav>
   )
 }
