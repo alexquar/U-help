@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from './ticket-bg.png'
-import { Space_Mono } from 'next/font/google'
+import LogoutButton from './LogoutButton'
 export default function Navbar({user}) {
   return (
     <nav>
@@ -14,8 +14,9 @@ export default function Navbar({user}) {
         />
       <h1>U Help</h1>
       <Link href='/'> Home</Link>
-      <Link href='/tickets'> Tickets</Link>
+      <Link className='mr-auto' href='/tickets'> Tickets</Link>
       {user && (<span>Hey, {user.email}</span>) }
+      <LogoutButton />
     </nav>
   )
 }
