@@ -126,10 +126,10 @@ form button {
   @apply bg-red-300 text-red-600;
 }
 .pill.medium {
-  @apply bg-blue-300 text-blue-600;
+  @apply bg-yellow-300 text-yellow-600;
 }
 .pill.low {
-  @apply bg-emerald-300 text-emerald-600;
+  @apply bg-blue-300 text-blue-600;
 }
 .card .pill {
   @apply 
