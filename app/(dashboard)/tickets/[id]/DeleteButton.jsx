@@ -7,7 +7,7 @@ export default function DeleteButton({id}) {
     const router = useRouter()
     const handleClick = async () => {
         setIsPending(true)
-        const res = await fetch(`http://localhost:3000/api/tickets/${id}`, {
+        const res = await fetch(`/api/tickets/${id}`, {
             method : 'DELETE'
         })    
         const json = await res.json()
