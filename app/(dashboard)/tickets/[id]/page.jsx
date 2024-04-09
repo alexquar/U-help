@@ -1,14 +1,7 @@
 export const dynamicParams = true
 import { notFound } from "next/navigation"
-export async function generateStaticParams() {
-    const res = await fetch('http://localhost:4000/tickets')
-  
-    const tickets = await res.json()
-   
-    return tickets.map((ticket) => ({
-      id: ticket.id
-    }))
-  }
+import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
   
   export async function generateMetadata({params}){
     const {id} = params
@@ -18,17 +11,18 @@ export async function generateStaticParams() {
   }
 
 async function getTickets(id){
-    const res = await fetch("http://localhost:4000/tickets/"+id, {
-        next: {
-          revalidate: 30 
-        }
-      })
+  const supabase = createServerComponentClient({ cookies })
 
-      if (!res.ok) {
-        notFound()
-      }
+  const { data } = await supabase.from('tickets')
+    .select()
+    .eq('id', id)
+    .single()
 
-   return res.json()
+    if (!data) {
+      notFound()
+    }
+  
+    return data
 }
 export default async function TicketDetails({params}) {
     const {id} = params
