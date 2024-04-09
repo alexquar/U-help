@@ -7,18 +7,32 @@ export default function CreateForm() {
     const [body, setBody] = useState('')
     const [priority, setPriority] = useState('low')
     const [isLoading, setIsLoading] = useState(false)
-    const handleSubmit = async (e)=>{
-        e.preventDefault()
-        setIsLoading(true)
+    const [error, setError] = useState(null)
 
-    const newTicket = { title, body, priority}
-
- await fetch('http://localhost:3000/api/tickets', {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(newTicket)
-    })
+    const handleSubmit = async (e)  => {
+      e.preventDefault()
+      setIsLoading(true)
+  
+      const newTicket = { title, body, priority, user_email: 'placeholder@gmail.com' }
+  
+      const res = await fetch('http://localhost:3000/api/tickets', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newTicket)
+      })
+  
+      const json = await res.json()
+  
+      if (json.error) {
+        console.log(error.message)
+      }
+      if (json.data) {
+        router.refresh()
+        router.push('/tickets')
+      }
     }
+  
+
   return (
     <form onSubmit={handleSubmit} className="w-1/2">
       <label>
@@ -55,6 +69,7 @@ export default function CreateForm() {
       >
       {isLoading && <span>Adding...</span>}
       {!isLoading && <span>Add Ticket</span>}
+      {error && <div className="error">{error}</div>}
     </button>
     </form>
   )
